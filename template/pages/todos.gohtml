@@ -1,0 +1,51 @@
+{{define "main"}}
+    <div id="todos-container">
+    <h1 class="mb-4">My {{block "lists" .}}No lists{{end}} {{len .Todos}}</h1>
+    <ul id="todos" class="list-unstyled">
+        {{ range .Todos}}{{block "todo" .}}
+            <li class="todo">
+                <form>
+                    <input
+                            title="Todo item completed"
+                            type="checkbox"
+                            name="completed"
+                            {{if .Completed}}checked{{end}}
+                            hx-patch="/api/todo/{{.Id}}"
+                            hx-swap="none"
+                    >
+                    <input
+                            title="Todo title"
+                            type="text"
+                            name="title"
+                            hx-patch="/api/todo/{{.Id}}"
+                            value="{{.Title}}"
+                            hx-swap="none"
+                    />
+                    <button
+                            hx-target="closest .todo"
+                            hx-swap="outerHTML"
+                            hx-delete="/api/todo/{{.Id}}"
+                    >Delete</button>
+                </form>
+            </li>
+        {{end}}{{end}}
+    </ul>
+    <div>
+        <div>
+            <h4>Add todo</h4>
+            <form
+                    hx-post="/api/todo/"
+                    hx-target="#todos"
+                    hx-swap="beforeend">
+                <input
+                        class="form-control"
+                        title="Todo title"
+                        name="title"
+                        placeholder="New Todo"
+                >
+                <button class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+    </div>
+{{end}}

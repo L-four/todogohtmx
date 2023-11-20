@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Todo App</title>
+<script src="https://unpkg.com/htmx.org@1.9.6"></script>
+<link rel="stylesheet" href="static/css/pico.min.css">
+</head>
+<body class="py-4" hx-include="#state">
+
+    {{block "main" .}} No body {{end}}
+
+    <form id="state">
+        {{ range $index, $element := .State }} <input name="s_{{$index}}" value="{{index $element 0}}"> {{end}}
+    </form>
+</body>
+</html>
